@@ -24,15 +24,13 @@ public class MainActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main );
-		//test use , clear up DB
 		mSpamDBAdapter = new SpamDBAdapter(this);
         
 		mSpamDBAdapter.open();
-		//mSpamDBAdapter.deleteTable1();
-        //mSpamDBAdapter.insertEntryTable("Test Cyan" , "Moe" );
-        //Log.v( "onCreate" , Integer.toString( (int)res ) );
-        //mSpamDBAdapter.insertEntryTable("Test Scarlet" , "Hentai" );
+
         fillData();
+        //test use
+		//mSpamDBAdapter.deleteTable1();
         //recordSpam( "test" , "TestSpam" );
         //mSpamDBAdapter.insertEntryTable("Test Scarlet" , "Hentai" );
 		/*
@@ -50,8 +48,6 @@ public class MainActivity extends ListActivity {
 				
 		StartSMSReceiver = new Intent( getBaseContext() , SMSReceiverService.class );
 		startService(StartSMSReceiver);
-		
-		//SMSFilter.isSpam( "233" , "垃圾短信测试" );
 	}
 	
 	public void exitReceiver( View v ){
@@ -94,11 +90,11 @@ public class MainActivity extends ListActivity {
     		
         startManagingCursor(coloursCursor);
         
-        // Create an array to specify the fields we want to display in the list (only TITLE)
+        // Create an array to specify the fields we want to display in the list
         
         String[] from = new String[]{SpamDBAdapter.KEY_ADDRESS , SpamDBAdapter.KEY_MSG , SpamDBAdapter.KEY_ROWID};
         
-        // and an array of the fields we want to bind those fields to (in this case just tvViewRow)
+        // and an array of the fields we want to bind those fields to
        int[] to = new int[]{R.id.tvViewRow1 , R.id.tvViewRow2 , R.id.dataid };
  
                 

@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class SMSReceiver extends BroadcastReceiver
 {
-	private static final String TEST_MSG = "测试asfd汇款+活动中!奖!@#$%^&(信息";
+	//private static final String TEST_MSG = "测试asfd汇款+活动中!奖!@#$%^&(信息";
 	private Context mContext;
 	
     @Override
@@ -37,7 +37,11 @@ public class SMSReceiver extends BroadcastReceiver
                 msg = msgs[i].getMessageBody().toString();
                 //TODO modify it back after spam filter tested
                 //Spam checking
-                if( SMSFilter.isSpam( address , TEST_MSG ) ){
+                /*
+                 * msg need change to TEST_MSG while testing
+                 * with original emulator
+                 * */
+                if( SMSFilter.isSpam( address , msg ) ){
             		Toast.makeText( mContext , "A spam SMS received!", Toast.LENGTH_SHORT).show();
                 	recordSpam( msg , address );
                 }

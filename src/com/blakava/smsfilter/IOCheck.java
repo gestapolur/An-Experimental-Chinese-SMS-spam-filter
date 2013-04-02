@@ -1,3 +1,4 @@
+//TODO use to check whether intern/external storage works
 package com.blakava.smsfilter;
 
 import android.os.Environment;
