@@ -10,12 +10,14 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Process;
+import android.provider.ContactsContract;
 import android.widget.Toast;
 
 public class SMSReceiverService extends Service {
 	  private Looper mServiceLooper;
 	  private ServiceHandler mServiceHandler;
 	  private IBinder mBinder;// interface for clients that bind
+	  private final int PICK = 1;
 	  protected static SpamDBAdapter mSpamDBAdapter;
 
 	  // Handler that receives messages from the thread
@@ -25,7 +27,10 @@ public class SMSReceiverService extends Service {
 	      public ServiceHandler(Looper looper) {
 	          super(looper);
 	      }
-	      
+	      /**
+	       * this thread Start SMS receiver
+	       * and other works in this process
+	       */
 	      @Override
 	      public void handleMessage(Message msg) {
 	  		  mSpamDBAdapter = new SpamDBAdapter(getBaseContext());    
@@ -38,7 +43,8 @@ public class SMSReceiverService extends Service {
 	          // Stop the service using the startId, so that we don't stop
 	          // the service in the middle of handling another job
 	          //stopSelf(msg.arg1);
-	      	}
+
+	      }
 	  }
 
 	  @Override
@@ -48,8 +54,8 @@ public class SMSReceiverService extends Service {
 
 	  @Override
 	  public void onCreate() {
-		//TODO DELETE IT AFTER DEBUG
-		//android.os.Debug.waitForDebugger();
+		  //for traceroute debug use
+		  //android.os.Debug.waitForDebugger();
 	    
 		 // Start up the thread running the service.  Note that we create a
 	    // separate thread because the service normally runs in the process's
@@ -90,16 +96,4 @@ public class SMSReceiverService extends Service {
 	  public void onDestroy() {
 	    Toast.makeText(this, "Spam filter exited", Toast.LENGTH_SHORT).show(); 
 	  }
-	  /*
-	  private class DisplayToast implements Runnable{
-		  String mText;
-		  public DisplayToast(String text){
-		    mText = text;
-		  }
-		  @Override
-		  public void run(){
-		     Toast.makeText(getApplicationContext(), mText, Toast.LENGTH_SHORT).show();
-		  }
-		}
-	*/ 
 }

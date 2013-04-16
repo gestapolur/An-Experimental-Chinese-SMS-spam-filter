@@ -2,7 +2,12 @@
 package com.blakava.smsfilter;
 
 import android.os.Environment;
-
+/**
+ * not used yet
+ * use to check whether read word list correctly from wordlist.txt
+ * use to check whether intern/external storage works
+ * @author gestapolur
+ */
 public class IOCheck {
 
 	/* Checks if external storage is available for read and write */

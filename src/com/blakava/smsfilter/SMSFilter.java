@@ -10,13 +10,22 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.blakava.datastructure.DefaultSpamWords;
 import com.blakava.datastructure.Node;
 
+/**
+ * 
+ * @author gestapolur
+ * Filter SMS use aho-crosick automata
+ */
 public class SMSFilter {
 
 	private final static String TAG = "ReadWordList";
@@ -25,7 +34,8 @@ public class SMSFilter {
 	private static String fileName = "/wordlist.txt";
     //total node number
     protected static int tot = 0;
-
+    private static Context mContext;
+    
 	public static ArrayList<Node>node = new ArrayList<Node>();	
 
     /**
@@ -137,7 +147,7 @@ public class SMSFilter {
         return PMCnt;
     }
 
-	/*
+	/**
 	 * read word list from internal storage
 	 * constructAutomata 
 	 */
@@ -155,7 +165,6 @@ public class SMSFilter {
         		//write standard word list in source code
         		for( String t : DefaultSpamWords.SpamWordList ){
         			out.write( t.getBytes() , 0 , t.getBytes().length );
-        			//out.write("\n".getBytes());
         		}
         		out.close();
         	}
@@ -174,15 +183,52 @@ public class SMSFilter {
 	protected static void init( Context mContext ){
 		readWordList( mContext );
 		
+		SMSFilter.mContext = mContext;
+		
 		Toast.makeText( mContext , "word list read", Toast.LENGTH_SHORT).show();
 
 		return ;
 	}
 	
+	private static boolean notInContact( String address ){
+	    Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+	    //ContentResolver cr = mContext.getContentResolver();
+	    //Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,null, null, null, null);
+	    String[] projection    = new String[] {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+	                        ContactsContract.CommonDataKinds.Phone.NUMBER };
+	    Cursor names = mContext.getContentResolver().query(uri, projection, null, null, null);
+	    int indexName = names.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+	    int indexNumber = names.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+	    names.moveToFirst();
+	    Log.v( TAG , "enter contact reader...");
+	    do {
+	       String name  = names.getString(indexName);
+	       Log.e("Name new:", name);
+	       String number = names.getString(indexNumber);
+	       Log.e("Number new:","::"+number);
+	       Log.v(TAG, address + "|" + number + "|" );
+	       if( address.compareTo(number) == 0 ){
+	    	   Log.v(TAG, "equal");
+	    	   return true;
+	       }
+	    	   
+	    } while ( names.moveToNext() );
+	    return false;
+	}
+	
+	/**
+	 * 
+	 * @param address
+	 * sms address
+	 * @param msg
+	 * sms message
+	 * @return
+	 * true if spam spotted
+	 */
 	protected static boolean isSpam( String address , String msg ){
 		Log.v( "isSpam" , "node size:" + Integer.toString( node.size() ) );
 		//TODO add trigger - address not in addressbook
-		if( PatternMatchCount( msg ) >= AvarageSpamWordCnt )
+		if( PatternMatchCount( msg ) >= AvarageSpamWordCnt || notInContact( address ) == true )
 			return true;
 		return false;
 	}
