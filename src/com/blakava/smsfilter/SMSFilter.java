@@ -209,11 +209,11 @@ public class SMSFilter {
 	       Log.v(TAG, address + "|" + number + "|" );
 	       if( address.compareTo(number) == 0 ){
 	    	   Log.v(TAG, "equal");
-	    	   return true;
+	    	   return false;
 	       }
 	    	   
 	    } while ( names.moveToNext() );
-	    return false;
+	    return true;
 	}
 	
 	/**
