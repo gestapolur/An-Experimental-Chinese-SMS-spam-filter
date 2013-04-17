@@ -63,7 +63,9 @@ public class SMSFilter {
         return ra;
     }
     
-    //init root
+    /**
+     * init the root of automata
+     */
     protected static void initRoot(){
         node.add( new Node( -1 ) );
         node.get( 0 ).fail = 0;
@@ -159,7 +161,8 @@ public class SMSFilter {
         initRoot();
 
         try {
-        	if( !WordlistFile.exists() ){//if wordlist file doesn't exist, create from default file
+        	//if wordlist file doesn't exist, create from spam words list that store in code
+        	if( !WordlistFile.exists() ){
         		WordlistFile.createNewFile();
         		BufferedOutputStream out = new BufferedOutputStream( new FileOutputStream( WordlistFile ));
         		//write standard word list in source code
@@ -168,6 +171,7 @@ public class SMSFilter {
         		}
         		out.close();
         	}
+        	//open word list file
     		Scanner in = new Scanner( new BufferedReader( new FileReader( WordlistFile ) ) );
     		while( in.hasNext() )
                 addNode( transCode( new String( in.next() )) );

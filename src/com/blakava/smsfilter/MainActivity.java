@@ -29,7 +29,7 @@ public class MainActivity extends ListActivity {
 		mSpamDBAdapter.open();
 
         fillData();
-        //test use
+        //test DBAdapter usage
 		//mSpamDBAdapter.deleteTable1();
         //recordSpam( "test" , "TestSpam" );
         //mSpamDBAdapter.insertEntryTable("Test Scarlet" , "Hentai" );
