@@ -1,5 +1,7 @@
 package com.blakava.datastructure;
-
+/*
+ * AC-Automata nodes
+ */
 public class Node{   
     public int [ ]next = new int[ 10 ];
     public int fail;

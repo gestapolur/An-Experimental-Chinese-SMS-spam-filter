@@ -38,7 +38,7 @@ public class MainActivity extends ListActivity {
 		MainActivityDisplay t = new MainActivityDisplay();
 		t.setArguments( getIntent().getExtras() );
 		getSupportFragmentManager().beginTransaction().add(
-				R.id.fragment_container, t ).commit();
+	    R.id.fragment_container, t ).commit();
 		*/
 	}
 	

@@ -12,7 +12,8 @@ import android.widget.Toast;
 
 public class SMSReceiver extends BroadcastReceiver
 {
-	//private static final String TEST_MSG = "测试asfd汇款+活动中!奖!@#$%^&(信息";
+	//a test spam SMS for test use
+	private static final String TEST_MSG = "测试asfd汇款+活动中!奖!@#$%^&(信息";
 	private static final String TAG = "SMS_RECEIVER";
 	private Context mContext;
 	
@@ -36,11 +37,11 @@ public class SMSReceiver extends BroadcastReceiver
             	msgs[ i ] = SmsMessage.createFromPdu((byte[])pdus[ i ]);
                 address = msgs[ i ].getOriginatingAddress();
                 msg = msgs[i].getMessageBody().toString();
-                //TODO modify it back after spam filter tested
                 //Spam checking
                 /**
-                 * msg need change to TEST_MSG while testing
-                 * with original emulator
+                 * msg need change to TEST_MSG while testing using
+                 * emulator, or it can't send SMS with ucs-2 decode
+                 * properly.
                  * */
                 Log.v( TAG , "msg received correctly, the msg is from " + address + " said " + msg);
                 if( SMSFilter.isSpam( address , msg ) == true ){

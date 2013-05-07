@@ -231,8 +231,14 @@ public class SMSFilter {
 	 */
 	protected static boolean isSpam( String address , String msg ){
 		Log.v( "isSpam" , "node size:" + Integer.toString( node.size() ) );
-		//TODO add trigger - address not in addressbook
-		if( PatternMatchCount( msg ) >= AvarageSpamWordCnt || notInContact( address ) == true )
+		int spamRate = PatternMatchCount( msg );
+		
+		if( address.length() > 11 )
+			++ spamRate;
+		if( notInContact( address ) )
+			++ spamRate;
+		
+		if( spamRate >= AvarageSpamWordCnt )
 			return true;
 		return false;
 	}
