@@ -40,11 +40,12 @@ public final class R {
     }
     public static final class id {
         public static final int BtnToClick=0x7f090008;
-        public static final int action_settings=0x7f090009;
+        public static final int action_settings=0x7f09000a;
         public static final int btn_finish_dialog=0x7f090003;
         public static final int dataid=0x7f090007;
         public static final int exit_button=0x7f090001;
         public static final int fragment_container=0x7f090004;
+        public static final int notSpamButton=0x7f090009;
         public static final int sms_frame=0x7f090000;
         public static final int sms_text_received=0x7f090002;
         public static final int tvViewRow1=0x7f090005;

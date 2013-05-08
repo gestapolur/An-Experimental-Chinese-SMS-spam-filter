@@ -74,9 +74,7 @@ public class SMSReceiver extends BroadcastReceiver
 		mContext.getContentResolver().insert(Uri.parse("content://sms/"+box), values);
 	}
 	
-	//TODO save spam and display on a list
 	private void recordSpam( String msg , String address ){
-		Log.v( "recordSpam" , "before " + msg + " " + address );
 		SMSReceiverService.mSpamDBAdapter.open();
 		Log.v( "recordSpam" , msg + " " + address );
 		SMSReceiverService.mSpamDBAdapter.insertEntryTable( address , msg );
