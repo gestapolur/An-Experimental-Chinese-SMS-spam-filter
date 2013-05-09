@@ -83,6 +83,8 @@ public class MainActivity extends ListActivity {
 		
 		vwParentRow.setBackgroundColor(Color.DKGRAY); 
 		vwParentRow.refreshDrawableState();
+		//refresh list
+		fillData();
     }
     
     /**
@@ -118,6 +120,8 @@ public class MainActivity extends ListActivity {
 		
 		vwParentRow.setBackgroundColor(Color.DKGRAY); 
 		vwParentRow.refreshDrawableState();
+		//refresh list
+		fillData();
     }
     
     private void fillData() {
